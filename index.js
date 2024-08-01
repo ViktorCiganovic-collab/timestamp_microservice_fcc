@@ -35,7 +35,7 @@ date = new Date(+req.params.date)
   });
 
 if(invalidDate(date)) {
-    res.json({error : "Invalid Date"})
+    res.json({ error : "Invalid Date" })
     return;
     } 
 
