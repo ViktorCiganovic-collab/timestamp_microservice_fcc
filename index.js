@@ -26,7 +26,7 @@ app.get("/api/:date", function (req, res) {
 
 let date = new Date(req.params.date);
 
-// Here we check if the input in the url is a number. If its a stringified number we parse it into a number. 
+// Here we check if the input in the url is a number. If its a stringified number we convert it into a number. 
 if (!isNaN(req.params.date)) {
 date = new Date(+req.params.date)
 
