@@ -26,16 +26,19 @@ app.get("/api/:date", function (req, res) {
 
 let date = new Date(req.params.date);
 
+// Here we check if the input in the url is a number. If its a stringified number we parse it into a number. 
 if (!isNaN(req.params.date)) {
 date = new Date(+req.params.date)
 
 } 
-   
+
+// If the input in the url is not a number the we stop the function and response to the client side will be error: "Invalid Date"
 if (isInvalidDate(date)) {
   res.json({ error : "Invalid Date" })
   return;
 }
 
+// If the input was a number and we so far didn't return from the function then the clientside get response of the current date in unix and utc. 
 res.json({
   unix: date.getTime(),
   utc: date.toUTCString()
@@ -43,7 +46,7 @@ res.json({
 
 });
 
-// second API endpoint...
+// second API endpoint... an empty date input in the url will provide the current date in unix and utc:
 app.get("/api", function (req, res) {
   
   const d = new Date();
