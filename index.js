@@ -19,25 +19,27 @@ app.get("/", function (req, res) {
 });
 
 
-const invalidDate = (date) => date.toUTCString() === "Invalid Date";
+const isInvalidDate = (date) => date.toUTCString() === "Invalid Date"
 
 // your first API endpoint... 
 app.get("/api/:date", function (req, res) {
 
-let date = new Date(req.params.date)
+let date = new Date(req.params.date);
 
-if(invalidDate(date)) {
+if (!isNaN(req.params.date)) {
 date = new Date(+req.params.date)
+
 } 
-  res.json({
+   
+if (isInvalidDate(date)) {
+  res.json({ error : "Invalid Date" })
+  return;
+}
+
+res.json({
   unix: date.getTime(),
   utc: date.toUTCString()
   });
-
-if(invalidDate(date)) {
-    res.json({ error : "Invalid Date" })
-    return;
-    } 
 
 });
 
@@ -56,5 +58,13 @@ app.get("/api", function (req, res) {
 
 // Listen on port set in environment variable or default to 3000
 var listener = app.listen(process.env.PORT || 3000, function () {
+  console.log('Your app is listening on port ' + listener.address().port);
+});
+
+
+
+
+// listen for requests :)
+var listener = app.listen(process.env.PORT, function () {
   console.log('Your app is listening on port ' + listener.address().port);
 });
